@@ -39,4 +39,39 @@
 (terpri)
 
 (defun depth (lst)
-    )
+    (cond
+        ((atom lst) 0)
+        (t (+ 1 (reduce #'max (mapcar #'depth lst))))))
+        
+(print "TEST: depth")
+(my-assert (depth ()) 0)
+(my-assert (depth '(a b c)) 1)
+(my-assert (depth '(a (b c))) 2)
+(my-assert (depth '((a b) c (d ((f))))) 4)
+(terpri)
+
+(defun flatten (lst)
+    (cond
+        ((null lst) nil)
+        ((atom (car lst)) (cons (car lst) (flatten (cdr lst))))
+        (t (append (flatten (car lst)) (flatten (cdr lst))))))
+
+(print "TEST: flatten")
+(my-assert (flatten '((a b) c (d ((f))))) '(a b c d f))
+(terpri)
+
+(defun remove-left-most (target lst)
+    (print lst)
+    (cond
+        ((atom lst) lst)
+        ((equal target (car lst)) (cdr lst))
+        ((atom (car lst)) (cons (car lst) (remove-left-most target (cdr lst))))
+        (t (let ((temp (remove-left-most target (car lst))))
+                (cond
+                    ((equal temp (car lst)) (cons temp (remove-left-most target (cdr lst))))
+                    (t (cons temp (cdr lst))))))))
+        
+(print "TEST: remove-left-most")
+(my-assert (remove-left-most 'b '(a (b c)(c (b a)))) '(a (c)(c (b a))))
+(my-assert (remove-left-most '(c d) '((a (b c))((c d) e))) '((a (b c))(e)))
+(terpri)
