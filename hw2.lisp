@@ -168,6 +168,3 @@
 (my-assert (find-sim-st 1 '(b a b) '(b b a b a b b a a b)) 4)
 (my-assert (find-sim-st 2 '(b a b) '(b b a b a b b a a b)) 7)
 (terpri)
-; 10-c  (find-sim-st n l1 l2)  count similar substrings of l1 from l2. 
-; (find-sim-st 1 '(b a b) '(b b a b a b b a a b)) ==> 4
-; (find-sim-st 2 '(b a b) '(b b a b a b b a a b)) ==> 7
